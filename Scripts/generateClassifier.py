@@ -34,7 +34,7 @@ def generateClassifier(real, target, selection, crossover, population, generatio
     print('Individual: \t\t' + str(individual))
     print('Feature Subset\t: ' + str(header))
 
-    print('\n\ncreating a new classifier with the result')
+    print('\n\n Creating a new classifier with the result')
     max_feat = individual.count(1) 
     rfc = RandomForestClassifier(max_depth=12, 
                                 min_samples_split=6, 
