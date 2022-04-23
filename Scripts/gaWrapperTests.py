@@ -38,14 +38,14 @@ d - desenvolvimento
 target_options = ["an", "a"]
 selection_options = ["r", "t"]
 crossover_options = [1, 2]
-population_options = [10,200]
+population_options = [10,20]
 generation_options = [20, 40]
 mutation_prob_options = [0.05, 0.1]
 crossover_prob_options = [0.5, 0.9]
 elitism_options = [True, False]
 
 fields = ['accuracy','features','target', 'selection', 'crossover', 'population', 'generations', 'mutprob', 'crossprob','elitism']
-with open('../Reports/gaWrapperTests.csv', 'a', newline='') as f_output:
+with open('../Reports/gaWrapperTests.csv', 'w', newline='') as f_output:
     csv_output = csv.DictWriter(f_output, fieldnames = fields, restval = 'NA')
     csv_output.writeheader()
     for to in target_options:
@@ -77,4 +77,5 @@ with open('../Reports/gaWrapperTests.csv', 'a', newline='') as f_output:
                                         'crossprob'     :cpo,
                                         'elitism'       : eo
                                     }
-                                    csv_output.writerow(row)                            
+                                    csv_output.writerow(row)           
+    f_output.close()                 

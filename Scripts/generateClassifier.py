@@ -41,7 +41,7 @@ def generateClassifier(real, target, selection, crossover, population, generatio
                                                                                 +'_mp_'+str(mutationprob)
                                                                                 +'_xp_'+str(xprob)
                                                                                 +'_elt_'+str(elitism)
-                                                                                +'_real_' if real else '_dev_'
+                                                                                +('_real' if real else '_dev')
                                                                                 +'/results.txt')
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, "w") as f:
@@ -94,6 +94,8 @@ def generateClassifier(real, target, selection, crossover, population, generatio
                                                                                 +'_g_'+str(generations)
                                                                                 +'_mp_'+str(mutationprob)
                                                                                 +'_xp_'+str(xprob)
+                                                                                +'_elt_'+str(elitism)
+                                                                                +('_real' if real else '_dev')
                                                                                 +'/confmatrix.png') 
     plt.figure().clear()
     plt.close()
@@ -109,6 +111,8 @@ def generateClassifier(real, target, selection, crossover, population, generatio
                                                                                 +'_g_'+str(generations)
                                                                                 +'_mp_'+str(mutationprob)
                                                                                 +'_xp_'+str(xprob)
+                                                                                +'_elt_'+str(elitism)
+                                                                                +('_real' if real else '_dev')
                                                                                 +'/perform.png')
 
     df_log = pd.DataFrame(log)
@@ -120,5 +124,7 @@ def generateClassifier(real, target, selection, crossover, population, generatio
                                                                                 +'_g_'+str(generations)
                                                                                 +'_mp_'+str(mutationprob)
                                                                                 +'_xp_'+str(xprob)
+                                                                                +'_elt_'+str(elitism)
+                                                                                +('_real' if real else '_dev')
                                                                                 +'/ga.csv')
     return acc_score, n_features, header
