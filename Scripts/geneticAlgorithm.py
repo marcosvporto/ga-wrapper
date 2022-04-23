@@ -1,9 +1,9 @@
-from deap import base, creator, algorithms, tools
+from deap import base, algorithms, creator, tools
 from getFitness import getFitness
 import random
 import numpy as np
-
-def geneticAlgorithm(X, y, target, crossover, selection, population, xprob, mutationprob, generations, *args, **kwargs):
+import libElitism
+def geneticAlgorithm(X, y, target, crossover, selection, population, xprob, mutationprob, generations,elitism,real, *args, **kwargs):
 
     if (target == "a"):
         creator.create("FitnessMax", base.Fitness, weights=(1.0,))
@@ -25,7 +25,7 @@ def geneticAlgorithm(X, y, target, crossover, selection, population, xprob, muta
     toolbox.register("attr_bool", random.randint, 0, 1)
     toolbox.register("individual", tools.initRepeat,creator.Individual, toolbox.attr_bool, n=len(X.columns))
     toolbox.register("population", tools.initRepeat, list,toolbox.individual)
-    toolbox.register("evaluate", getFitness, X=X, y=y, target=target)
+    toolbox.register("evaluate", getFitness, X=X, y=y, target=target, real=real)
 
 
     if (crossover == 1):
@@ -51,14 +51,19 @@ def geneticAlgorithm(X, y, target, crossover, selection, population, xprob, muta
 
 
     pop = toolbox.population(n=population)
-    hof = tools.HallOfFame(population * generations)
+    hof = tools.HallOfFame(2 if elitism else generations * population)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
 
     stats.register("avg", np.mean, axis=0)
     stats.register("min", np.min, axis=0)
     stats.register("max", np.max, axis=0)
 
-    pop, log = algorithms.eaSimple(pop, toolbox, cxpb=xprob, mutpb=mutationprob,
+    if elitism:
+        pop, log = libElitism.eaSimpleWithElitism(pop, toolbox, cxpb=xprob, mutpb=mutationprob,
                                     ngen=generations, stats=stats, halloffame=hof,
                                     verbose=True)
+    else:    
+        pop, log = algorithms.eaSimple(pop, toolbox, cxpb=xprob, mutpb=mutationprob,
+                                        ngen=generations, stats=stats, halloffame=hof,
+                                        verbose=True)
     return hof, pop, log
