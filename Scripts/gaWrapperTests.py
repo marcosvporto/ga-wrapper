@@ -5,38 +5,38 @@ import csv
 
 real = True
 
-'''
-t - target = Objetivo  
- - a -> acurácia
- - as -> acurácia média e desvio padrao médio
- - an -> acuária média e número de variáveis
- - asn -> acuárica média, desvio padrão médio e número de variáveis
+# '''
+# t - target = Objetivo  
+#  - a -> acurácia
+#  - as -> acurácia média e desvio padrao médio
+#  - an -> acuária média e número de variáveis
+#  - asn -> acuárica média, desvio padrão médio e número de variáveis
 
-c - crossover = cruzamento
- - default = 1 ponto
- - 2 = 2 pontos
- - 3  = Uniforme com probabilidade 0.03% de um atributo ser modificado
- - 4  = Uniforme com probabilidade 0.04% de um atributo ser modificado
- - 5  = Uniforme com probabilidade 0.05% de um atributo ser modificado
-
-
-p - populacao
-
-g - gerações
-
-m - probabilidade de mutação
-
-x - probabilidade de cruzamento
-
-s - seleção
-
- - r - roleta
- - t - torneio
- - b - melhor
+# c - crossover = cruzamento
+#  - default = 1 ponto
+#  - 2 = 2 pontos
+#  - 3  = Uniforme com probabilidade 0.03% de um atributo ser modificado
+#  - 4  = Uniforme com probabilidade 0.04% de um atributo ser modificado
+#  - 5  = Uniforme com probabilidade 0.05% de um atributo ser modificado
 
 
-d - desenvolvimento
-'''
+# p - populacao
+
+# g - gerações
+
+# m - probabilidade de mutação
+
+# x - probabilidade de cruzamento
+
+# s - seleção
+
+#  - r - roleta
+#  - t - torneio
+#  - b - melhor
+
+
+# d - desenvolvimento
+# '''
 
 target_options = ["an", "a"]
 selection_options = ["r", "t"]

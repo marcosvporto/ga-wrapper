@@ -1,7 +1,6 @@
 def bestIndividual(hof, X, y, *args, **kwargs):
-    """
-    Get the best individual
-    """
+
+    # Get the best individual
     maxAccurcy = 0.0
     for individual in hof:
         if(individual.fitness.values[0] > maxAccurcy):
