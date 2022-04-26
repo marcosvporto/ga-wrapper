@@ -10,7 +10,7 @@ real = True
 #  - a -> acuracia
 #  - as -> acuracia media e desvio padrao medio
 #  - an -> acuracia media e numero de variaveis
-#  - asn -> acuarica media, desvio padrão medio e numero de variaveis
+#  - asn -> acuarica media, desvio padrao medio e numero de variaveis
 
 # c - crossover = cruzamento
 #  - default = 1 ponto
