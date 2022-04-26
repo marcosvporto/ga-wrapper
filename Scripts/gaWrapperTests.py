@@ -7,10 +7,10 @@ real = True
 
 # '''
 # t - target = Objetivo  
-#  - a -> acurácia
-#  - as -> acurácia média e desvio padrao médio
-#  - an -> acuária média e número de variáveis
-#  - asn -> acuárica média, desvio padrão médio e número de variáveis
+#  - a -> acuracia
+#  - as -> acuracia media e desvio padrao medio
+#  - an -> acuracia media e numero de variaveis
+#  - asn -> acuarica media, desvio padrão medio e numero de variaveis
 
 # c - crossover = cruzamento
 #  - default = 1 ponto
@@ -22,13 +22,13 @@ real = True
 
 # p - populacao
 
-# g - gerações
+# g - geracoes
 
-# m - probabilidade de mutação
+# m - probabilidade de mutacao
 
 # x - probabilidade de cruzamento
 
-# s - seleção
+# s - selecao
 
 #  - r - roleta
 #  - t - torneio
