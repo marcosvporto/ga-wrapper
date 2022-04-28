@@ -117,7 +117,8 @@ with open('../Reports/'+('real' if real else 'dev')+'GenAlgWrapperTests.csv', 'a
                                                                                             xprob=cpo,
                                                                                             elitism = eo)
                                         end = time()
-                                        duration = "{:.2f} h".format((end - start)/3600)
+                                        #duration = "{:.2f}".format((end - start)/3600)
+                                        duration = round((end - start)/3600,2)
                                         row = {
                                             'accuracy'      : acc_score,
                                             'features'      : n_features,

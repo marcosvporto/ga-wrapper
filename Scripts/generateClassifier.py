@@ -76,10 +76,11 @@ def generateClassifier(real, target, selection, crossover, population, generatio
 
     rfc.fit(X.loc[train_index],y.loc[train_index])
     str_ind = [str(elem) for elem in individual]
-    dump(rfc, '../Models/'+(''.join(str_ind))+'.joblib')
     pred = rfc.predict(X_test)
     
     acc_score = accuracy_score(y_test, pred)
+    str_acc_score = str(round(acc_score, 2)).replace('.','')
+    dump(rfc, '../Models/'+(''.join(str_ind))+'_acc_'+str_acc_score+'.joblib')
     with open(filename, "a") as f:
         f.write('\nTest Accuracy Score: \t' + str(acc_score))
         f.close()
