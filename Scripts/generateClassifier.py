@@ -57,7 +57,8 @@ def generateClassifier(real, target, selection, crossover, population, generatio
                                 n_estimators = 100,
                                 criterion="gini",
                                 max_features=n_features,
-                                min_samples_leaf=20)
+                                min_samples_leaf=20,
+                                n_jobs=-1)
     cols = [index for index in range(len(individual)) if individual[index] == 0]
     X = X.drop(X.columns[cols], axis = 1)
     X_test = X_test.drop(X_test.columns[cols], axis = 1)

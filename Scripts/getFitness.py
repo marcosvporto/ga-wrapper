@@ -15,7 +15,8 @@ def getFitness(individual, X, y, target, real, *args, **kwargs):
                                      n_estimators = 100,
                                      criterion="gini",
                                      max_features=individual.count(1),
-                                     min_samples_leaf=20)
+                                     min_samples_leaf=20,
+                                     n_jobs=-1)
 
         scores = []
         for train_index, test_index in sss.split(X, y):

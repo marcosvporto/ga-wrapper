@@ -1,4 +1,5 @@
 from generateClassifier import generateClassifier 
+from time import time
 import os
 import csv 
 
@@ -73,7 +74,7 @@ for to in target_options:
 
 
 
-fields = ['accuracy','features','target', 'selection', 'crossover', 'population', 'generations', 'mutprob', 'crossprob','elitism']
+fields = ['accuracy','features','target', 'selection', 'crossover', 'population', 'generations', 'mutprob', 'crossprob','elitism','duration']
 if not os.path.isfile('../Reports/gaWrapperTests.csv'):
     print("First Time Running Tests")
     inputHeader = True
@@ -105,6 +106,7 @@ with open('../Reports/'+('real' if real else 'dev')+'GenAlgWrapperTests.csv', 'a
                                     if not os.path.isdir(foldername) or foldername == latest:
                                         if foldername == latest:
                                             print("Repeating Latest Test to avoid corrupted data")
+                                        start = time()
                                         acc_score, n_features, header = generateClassifier( real=real, 
                                                                                             target = to, 
                                                                                             selection=so, 
@@ -114,6 +116,8 @@ with open('../Reports/'+('real' if real else 'dev')+'GenAlgWrapperTests.csv', 'a
                                                                                             mutationprob=mpo, 
                                                                                             xprob=cpo,
                                                                                             elitism = eo)
+                                        end = time()
+                                        duration = "{:.2f} h".format((end - start)/3600)
                                         row = {
                                             'accuracy'      : acc_score,
                                             'features'      : n_features,
@@ -124,7 +128,8 @@ with open('../Reports/'+('real' if real else 'dev')+'GenAlgWrapperTests.csv', 'a
                                             'generations'   : go, 
                                             'mutprob'       : mpo, 
                                             'crossprob'     : cpo,
-                                            'elitism'       : eo
+                                            'elitism'       : eo,
+                                            'duration'      : duration
                                         }
                                         csv_output.writerow(row)
                                     
