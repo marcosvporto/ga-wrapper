@@ -43,7 +43,7 @@ def geneticAlgorithm(X, y, target, crossover, selection, population, xprob, muta
     if(selection == "r"):
         toolbox.register("select", tools.selRoulette)
     elif(selection == "t"):
-        toolbox.register("select", tools.selTournament)
+        toolbox.register("select", tools.selTournament, tournsize=population)
     elif(selection == "b"):
         toolbox.register("select", tools.selBest)
     else:

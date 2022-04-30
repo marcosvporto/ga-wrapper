@@ -1,4 +1,5 @@
 from generateClassifier import generateClassifier 
+import pandas as pd
 from time import time
 import os
 import csv 
@@ -39,14 +40,14 @@ real = True
 # d - desenvolvimento
 # '''
 
-target_options = ["an", "a"]
-selection_options = ["r", "t"]
-crossover_options = [1, 2]
-population_options = [20,50]
-generation_options = [50, 100]
-mutation_prob_options = [0.05, 0.1]
-crossover_prob_options = [0.5, 0.9]
-elitism_options = [True, False]
+target_options = ["an"]
+selection_options = ["t"]
+crossover_options = [2]
+population_options = [40]
+generation_options = [100]
+mutation_prob_options = [0.1]
+crossover_prob_options = [1]
+elitism_options = [True]
 
 latest = ''
 for to in target_options:
@@ -75,13 +76,26 @@ for to in target_options:
 
 
 fields = ['accuracy','features','target', 'selection', 'crossover', 'population', 'generations', 'mutprob', 'crossprob','elitism','duration']
-if not os.path.isfile('../Reports/gaWrapperTests.csv'):
+if not os.path.isfile('../Reports/'+('real' if real else 'dev')+'GenAlgWrapperTests.csv'):
     print("First Time Running Tests")
     inputHeader = True
 else:
     print("Resuming Tests")
     inputHeader = False
 
+df = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Trainval_norm_group_marcos.csv")
+dfTest = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Test_norm_group_marcos.csv")
+
+if (not real):
+    print("OBS: Running a reduced version of the Data")
+    df = df.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.001))
+    dfTest = dfTest.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.001))
+else:
+    df = df.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.2))
+    dfTest = dfTest.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.2))
+
+df.reset_index(drop=True, inplace=True)
+dfTest.reset_index(drop=True, inplace=True)
 with open('../Reports/'+('real' if real else 'dev')+'GenAlgWrapperTests.csv', 'a', newline='') as f_output:
     csv_output = csv.DictWriter(f_output, fieldnames = fields, restval = 'NA')
     if inputHeader:
@@ -107,7 +121,9 @@ with open('../Reports/'+('real' if real else 'dev')+'GenAlgWrapperTests.csv', 'a
                                         if foldername == latest:
                                             print("Repeating Latest Test to avoid corrupted data")
                                         start = time()
-                                        acc_score, n_features, header = generateClassifier( real=real, 
+                                        acc_score, n_features, header = generateClassifier( df=df, 
+                                                                                            dfTest=dfTest,
+                                                                                            real=real, 
                                                                                             target = to, 
                                                                                             selection=so, 
                                                                                             crossover=co, 

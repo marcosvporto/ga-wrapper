@@ -9,21 +9,11 @@ from joblib import dump
 import os
 import numpy as np
 
-def generateClassifier(real, target, selection, crossover, population, generations, mutationprob, xprob, elitism, *args, **kwargs):
+def generateClassifier(df, dfTest, real, target, selection, crossover, population, generations, mutationprob, xprob, elitism, *args, **kwargs):
 
-    df = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Trainval_norm_group_marcos.csv")
-    dfTest = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Test_norm_group_marcos.csv")
-
-    if (not real):
-        print("OBS: Running a reduced version of the Data")
-        df = df.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.001))
-        dfTest = dfTest.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.001))
-
+    
     X = df.drop(['Fault_Class','simulationRun','window'], axis=1)
     y = df['Fault_Class']
-
-    X.reset_index(drop=True, inplace=True)
-    y.reset_index(drop=True, inplace=True)
 
     X_test = dfTest.drop(['Fault_Class','simulationRun','window'], axis=1)
     y_test = dfTest['Fault_Class']
@@ -62,19 +52,20 @@ def generateClassifier(real, target, selection, crossover, population, generatio
     cols = [index for index in range(len(individual)) if individual[index] == 0]
     X = X.drop(X.columns[cols], axis = 1)
     X_test = X_test.drop(X_test.columns[cols], axis = 1)
-    scores = []
-    train_indexes = []
-    for train_index, test_index in sss.split(X, y):
-        X_train, X_test = X.loc[train_index], X.loc[test_index]
-        y_train, y_test = y.loc[train_index], y.loc[test_index]
-        rfc.fit(X_train, y_train)
-        pred = rfc.predict(X_test)
-        scores.append(accuracy_score(y_test, pred))
-        train_indexes.append(train_index)
-    scores = np.array(scores)
-    train_index = train_indexes[scores.argmax()]
+    # scores = []
+    # train_indexes = []
+    # for train_index, test_index in sss.split(X, y):
+    #     X_train, X_test = X.loc[train_index], X.loc[test_index]
+    #     y_train, y_test = y.loc[train_index], y.loc[test_index]
+    #     rfc.fit(X_train, y_train)
+    #     pred = rfc.predict(X_test)
+    #     scores.append(accuracy_score(y_test, pred))
+    #     train_indexes.append(train_index)
+    # scores = np.array(scores)
+    # train_index = train_indexes[scores.argmax()]
 
-    rfc.fit(X.loc[train_index],y.loc[train_index])
+    # rfc.fit(X.loc[train_index],y.loc[train_index])
+    rfc.fit(X,y)
     str_ind = [str(elem) for elem in individual]
     pred = rfc.predict(X_test)
     

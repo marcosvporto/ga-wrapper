@@ -9,7 +9,7 @@ def getFitness(individual, X, y, target, real, *args, **kwargs):
     if(individual.count(0) < len(individual)):
         cols = [index for index in range(len(individual)) if individual[index] == 0]
         X = X.drop(X.columns[cols], axis = 1)
-        sss = StratifiedShuffleSplit(n_splits=5 if real else 1, test_size=0.2)
+        sss = StratifiedShuffleSplit(n_splits=1 if real else 1, test_size=0.2)
         rfc = RandomForestClassifier(max_depth=12, 
                                      min_samples_split=6, 
                                      n_estimators = 100,
