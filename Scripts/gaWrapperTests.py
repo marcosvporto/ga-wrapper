@@ -43,8 +43,8 @@ real = True
 target_options = ["an"]
 selection_options = ["t"]
 crossover_options = [2]
-population_options = [40]
-generation_options = [100]
+population_options = [20]
+generation_options = [20]
 mutation_prob_options = [0.1]
 crossover_prob_options = [1]
 elitism_options = [True]
@@ -83,16 +83,13 @@ else:
     print("Resuming Tests")
     inputHeader = False
 
-df = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Trainval_norm_group_marcos.csv")
-dfTest = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Test_norm_group_marcos.csv")
+df = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Trainval_norm_20_percent.csv")
+dfTest = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Test_norm_20_percent.csv")
 
 if (not real):
     print("OBS: Running a reduced version of the Data")
     df = df.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.001))
     dfTest = dfTest.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.001))
-else:
-    df = df.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.2))
-    dfTest = dfTest.groupby('Fault_Class').apply(lambda x:x.sample(frac=0.2))
 
 df.reset_index(drop=True, inplace=True)
 dfTest.reset_index(drop=True, inplace=True)
