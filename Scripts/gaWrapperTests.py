@@ -40,13 +40,13 @@ real = True
 # d - desenvolvimento
 # '''
 
-target_options = ["an"]
-selection_options = ["t"]
-crossover_options = [2]
-population_options = [20]
-generation_options = [20]
-mutation_prob_options = [0.1]
-crossover_prob_options = [1]
+target_options = ["an","a"]
+selection_options = ["t","r","b"]
+crossover_options = [2,1]
+population_options = [20,50]
+generation_options = [20,50]
+mutation_prob_options = [0.1, 0.05]
+crossover_prob_options = [1,0.5]
 elitism_options = [True]
 
 latest = ''
