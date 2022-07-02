@@ -1,3 +1,7 @@
+'''
+This module tests the accuracy of the model trained using all Variables, i.e., without feature selection
+'''
+
 from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -10,17 +14,25 @@ import os
 import numpy as np
 import pickle
 
-
+'''
+Loading Datasets
+'''
 df = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Trainval_norm_20_percent.csv")
 dfTest = pd.read_csv("../Datasets/TEP_AllCases_accumulated_winlen_50_Test_norm_20_percent.csv")
 
-
+'''
+Removing Irrelevant Columns and Splitting Class from Variables
+'''
 X = df.drop(['Fault_Class','simulationRun','window'], axis=1)
 y = df['Fault_Class']
 
 X_test = dfTest.drop(['Fault_Class','simulationRun','window'], axis=1)
 y_test = dfTest['Fault_Class']
 
+'''
+Creating 5-Fold Stratified Validating Set
+And INstantiating Randon Forest Classifier
+'''
 sss = StratifiedShuffleSplit(n_splits=5, test_size=0.2)
 rfc = RandomForestClassifier(max_depth=12, 
                             min_samples_split=6, 
@@ -29,6 +41,10 @@ rfc = RandomForestClassifier(max_depth=12,
                             max_features=52,
                             min_samples_leaf=20,
                             n_jobs=-1)
+
+'''
+Trainning and Validating Models
+'''
 scores = []
 train_indexes = []
 models = []
@@ -49,13 +65,18 @@ acc_score = accuracy_score(y_test, pred)
 str_acc_score = str(round(acc_score, 2)).replace('.','')
 dump(rfc, '../Models/allFeatures_acc_'+str_acc_score+'.joblib')
 
+'''
+Saving Results to a Report
+'''
 filename = str('../Reports/allFeatures/results.txt')
 os.makedirs(os.path.dirname(filename), exist_ok=True)
 with open(filename, "a") as f:
     f.write('\nAll Features Result:')
     f.write('\nTest Accuracy Score: \t' + str(acc_score))
     f.close()
-
+'''
+Saving Confusion Matriz to a Report
+'''
 cf_matrix = confusion_matrix(y_test, pred, labels = rfc.classes_)
 font = {'size'   : 6}
 plt.rc('font', **font)

@@ -1,3 +1,7 @@
+
+'''
+This Module returns the Best Individual from a Hall Of Fame, i.e., returns the best individual from the last population
+'''
 def bestIndividual(hof, X, y, *args, **kwargs):
 
     # Get the best individual
